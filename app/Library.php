@@ -6,6 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Library extends Model
 {
-    protected $table='library';
+    protected $table='users';
     public $timestamps=true;
 }

@@ -7,7 +7,9 @@ use Illuminate\Http\Request;
 use App\Http\Requests\RegisterValidation;
 use App\Http\Requests\LoginValidation;
 use Auth;
-use App\Library;
+use DB;
+use Mail;
+use App\User;
 
 class FormController extends Controller
 {
@@ -20,37 +22,44 @@ class FormController extends Controller
     }
 
     public function registerData(RegisterValidation $request){
-        $register = new Library;
-        $register->Name = $request->name;    
-        $register->Email = $request->email;         
-        $register->Password =bcrypt($request->Password);        //bcrypt method encode the data for security purpose while saving paasword to db table
+        $register = new User;
+        $register->name = $request->name;    
+        $register->email = $request->email;         
+        $register->phone = $request->phone;         
+        $register->password =bcrypt($request->password);    //bcrypt method encode the data for security purpose while saving paasword to db table
+        $register->Longitude = $request->long;         
+        $register->Lattitude = $request->lat;                 
         if($request->hasfile('image')){
-    
             $file = $request->file('image');
-
             $extension=$file->getClientOriginalExtension();
-
             $filename = time(). '.'.$extension;
-
             $file->move('uploads/Pics/',$filename);
-
             $register->Image=$filename;
-
         }
-                $register ->save(); 
-        return redirect('/login-page')->with('success','Registered Successfully Login Here');
+            $register ->save(); 
+            $detail['Email'] = $request->email;
+            $detail['Name'] = $request->name;
+            $detail['image'] = $filename; 
+            $detail['subject'] = "Checking Mail";
+            
+            //This will send mail to the latest registered user
+            Mail::send('mail.mail-page',$detail,function($message) use ($detail){
+               $message ->to($detail['Email'],$detail['Name'] )
+               ->subject($detail['subject']);
+           });
+        return redirect('/')->with('success','Registered Successfully Login Here');
    }
-
 
 
    //this method login to redirect to next page when the credential will correct
    //these credentials should be according to InsertValidation form request
    public function loginData(LoginValidation $request){
        if(Auth::attempt(['email'=>$request->email, 'password'=>$request->password])){
-           return 'login';
+           $data = DB::select('select * from users where email = ?',[$request->email]);
+           return view('pages.dashboard',compact('data'));
        }
-       return 'Not Login';
+       else{
+           return redirect('/')->with('wrong', "Please Enter Valid Data");
+       }
    }
-
-
 }

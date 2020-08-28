@@ -36,6 +36,14 @@
   @endif
 
 
+  @if(session('wrong'))
+  <div class="alert alert-danger mt-3">
+     <p>{{ session('wrong') }}</p>
+  </div>
+
+  @endif
+
+
   @if(session('success'))
   <div class="alert alert-success mt-3">
      <p>{{ session('success') }}</p>
@@ -49,7 +57,6 @@
 
 
 </div>
-
-
+@yield('script')
 </body>
 </html>

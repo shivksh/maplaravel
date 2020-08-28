@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+Route::get('/ccc', function () {
     return view('welcome');
 });
 
@@ -22,7 +22,7 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 
-Route::get('/login-page' , 'Forms\FormController@loginPage');
+Route::get('/' , 'Forms\FormController@loginPage');
 Route::get('/register-page' , 'Forms\FormController@registerPage');
 Route::post('/register-data', 'Forms\FormController@registerData')->name('register-data');
 Route::post('/login-data', 'Forms\FormController@loginData')->name('login-data');

@@ -25,7 +25,7 @@ class RegisterValidation extends FormRequest
     {
         return [
             'name'=>'required|max:50',
-            'email'=>'required|max:50|unique:library',
+            'email'=>'required|max:50|unique:users',
             'password'=>'required|confirmed|max:20|',
             'image' => 'required'
         ];
