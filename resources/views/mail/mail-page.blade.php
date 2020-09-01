@@ -18,7 +18,7 @@ $details = User::latest() ->first();
     <img class="card-img-top" src="{{ asset('uploads/Pics/' . $details->Image) }}"  class="card-img-top"> 
     <p> Name - {{ $details -> name }} </p>
     <p> Email - {{ $details -> email }} </p>
-    <p> Email - {{ $details -> phone }} </p>
+    <p> Contact - {{ $details -> phone }} </p>
     <p> Register From Location - ( {{ $details -> Longitude }}, {{ $details -> Longitude }} ) </p>
 
 </body>

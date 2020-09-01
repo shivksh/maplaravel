@@ -31,7 +31,7 @@ class LoginValidation extends FormRequest
 
 
     //customize validation message 
-    public function message()
+    public function messages()
     {
         return [
             'email.required'=>'Please Enter Your Email',

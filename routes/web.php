@@ -26,3 +26,9 @@ Route::get('/' , 'Forms\FormController@loginPage');
 Route::get('/register-page' , 'Forms\FormController@registerPage');
 Route::post('/register-data', 'Forms\FormController@registerData')->name('register-data');
 Route::post('/login-data', 'Forms\FormController@loginData')->name('login-data');
+
+
+Route::get('select-specific/{id}', 'QuerryController@selectSpecific');
+Route::get('select-all', 'QuerryController@selectAll');
+Route::get('update/{id}', 'QuerryController@update');
+Route::get('delete/{id}', 'QuerryController@delete');

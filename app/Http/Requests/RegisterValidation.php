@@ -27,13 +27,14 @@ class RegisterValidation extends FormRequest
             'name'=>'required|max:50',
             'email'=>'required|max:50|unique:users',
             'password'=>'required|confirmed|max:20|',
-            'image' => 'required'
+            'image' => 'required',
+            'phone' => 'required|min:10|max:10'
         ];
     }
 
 
     //customize validation message 
-    public function message()
+    public function messages()
     {
         return [
             'name.required'=>'Please Enter Your Name',
@@ -41,6 +42,9 @@ class RegisterValidation extends FormRequest
             'email.required'=>'Please Enter Your Email',
             'email.max'=>'Email Address is too Long',
             'email.unique'=>'This Email is already Registered',
+            'phone.required' =>'Phone no. is not Entered',
+            'phone.max' => 'Phone no is too long',
+            'phone.min' => 'phone no. is too short',
         ];
     }
 }
