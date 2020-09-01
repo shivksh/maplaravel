@@ -16,7 +16,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/ccc', function () {
     return view('welcome');
 });
-
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
@@ -32,3 +31,11 @@ Route::get('select-specific/{id}', 'QuerryController@selectSpecific');
 Route::get('select-all', 'QuerryController@selectAll');
 Route::get('update/{id}', 'QuerryController@update');
 Route::get('delete/{id}', 'QuerryController@delete');
+Route::get('testing',function(){
+    return 'true';
+});
+
+Route::get('/tested',function(){
+    return view('abc');
+});
+
