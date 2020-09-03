@@ -8,7 +8,7 @@ use App\Http\Requests\RegisterValidation;
 use App\Http\Requests\LoginValidation;
 use Auth;
 use DB;
-use Mail;
+use App\Jobs\DoJob;
 use App\User;
 
 class FormController extends Controller
@@ -37,16 +37,19 @@ class FormController extends Controller
             $register->Image=$filename;
         }
             $register ->save(); 
-            $detail['Email'] = $request->email;
-            $detail['Name'] = $request->name;
-            $detail['image'] = $filename; 
-            $detail['subject'] = "Checking Mail";
+            $this->dispatch(new DoJob($register));
+            // DoJob::dispatch($register);
+
+        //     $detail['Email'] = $request->email;
+        //     $detail['Name'] = $request->name;
+        //     $detail['image'] = $filename; 
+        //     $detail['subject'] = "Checking Mail";
             
-            //This will send mail to the latest registered user
-            Mail::send('mail.mail-page',$detail,function($message) use ($detail){
-               $message ->to($detail['Email'],$detail['Name'] )
-               ->subject($detail['subject']);
-           });
+        //     //This will send mail to the latest registered user
+        //     Mail::send('mail.mail-page',$detail,function($message) use ($detail){
+        //        $message ->to($detail['Email'],$detail['Name'] )
+        //        ->subject($detail['subject']);
+        //    });
         return redirect('/')->with('success','Registered Successfully Login Here');
    }
 
@@ -62,4 +65,16 @@ class FormController extends Controller
            return redirect('/')->with('wrong', "Please Enter Valid Data");
        }
    }
+   public function loginPg(Request $request){
+       $request->session()->put('data',$request->input());
+    if($request->session()->get('data')){
+        return view('session.after-login');
+    }
+    return 'insert valid data';
+   }
+   
+    public function logoutPg(){
+        session()->forget('data');
+        return redirect('/');
+    }
 }

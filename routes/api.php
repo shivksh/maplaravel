@@ -32,9 +32,10 @@ Route::group([
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+// Route::middleware('auth:api')->group(function(){
 Route::post('/products','TestController@store');
 Route::get('/fetch/{id}','TestController@fetchById');
 Route::put('/update/{id}','TestController@updateById');
 Route::delete('/delete/{id}','TestController@deletById');
-
-
+// });

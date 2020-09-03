@@ -39,3 +39,9 @@ Route::get('/tested',function(){
     return view('abc');
 });
 
+
+Route::get('form', function(){
+return view('session.login-pg');
+});
+Route::post('/session','Forms\FormController@loginPg')->name('log');
+Route::get('/after-login','Forms\FormController@logoutPg')->name('logout');

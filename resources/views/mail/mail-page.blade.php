@@ -15,7 +15,7 @@ $details = User::latest() ->first();
 </head>
 <body>
     <h1> Welcome {{ $details -> name }} Good To See You  </h1>
-    <img class="card-img-top" src="{{ asset('uploads/Pics/' . $details->Image) }}"  class="card-img-top"> 
+    <img class="card-img-top" src="{{  asset('uploads/Pics/' . $details->Image) }}"  class="card-img-top"> 
     <p> Name - {{ $details -> name }} </p>
     <p> Email - {{ $details -> email }} </p>
     <p> Contact - {{ $details -> phone }} </p>
