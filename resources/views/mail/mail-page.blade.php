@@ -1,10 +1,9 @@
 <?php
 
 use App\User;
-$details = User::latest() ->first();
+$details = User::latest()->first();
 
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">

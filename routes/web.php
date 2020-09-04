@@ -13,9 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/ccc', function () {
-    return view('welcome');
-});
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
@@ -43,5 +41,16 @@ Route::get('/tested',function(){
 Route::get('form', function(){
 return view('session.login-pg');
 });
-Route::post('/session','Forms\FormController@loginPg')->name('log');
+
+Route::group(['middleware'=>['session']],function(){
 Route::get('/after-login','Forms\FormController@logoutPg')->name('logout');
+Route::get('/ccc', function () {
+    return view('welcome');
+})->name('ccc');
+
+});
+Route::post('/session','Forms\FormController@loginPg')->name('log');
+Route::get('/like/{product}','Forms\FormController@likeData')->name('like');
+Route::get('/dislike/{product}','Forms\FormController@dislikeData')->name('dislike');
+Route::get('/uall','Forms\FormController@uall');
+

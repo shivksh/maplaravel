@@ -28,17 +28,10 @@
 <div class='container cds mt-3' >
 
 <h1> Welcome {{ $data[0] -> name }}, Good To See You  </h1> 
-  <a  href="/login-page" onclick="event.preventDefault();
-       document.getElementById('logout-form').submit();">Logout   
-  </a>
-     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-    @csrf
-     </form>
-
 <div class="row">
 <div class="col-lg-6">
 <table class="table table-striped table-dark mt-3">
-  
+
   <tbody>
     <tr>
       <td scope="row">Name</td>
@@ -55,18 +48,19 @@
   </tbody>
 </table>
 </div>
-
 <div class="col-lg-6">
 <div class="card" style="width: 18rem;">
 <img class="card-img-top" src="{{ asset('uploads/Pics/' . $data[0]->Image) }}"  class="card-img-top"> 
   <div class="card-body">
   </div>
 </div>
-
 </div>
 </div>
+@if($variable[0]->thumbups == 1 )
+<a href="{{ route('dislike',$data[0]->email) }}"><button type="button" class="btn btn-primary">Dislike</button></a><br>
+@else
+<a href="{{ route('like',$data[0]->email) }}"><button type="button" class="btn btn-primary">Like</button></a><br>
+@endif
 </div>
-
-
 </body>
 </html>
