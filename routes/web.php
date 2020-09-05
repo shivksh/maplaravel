@@ -53,4 +53,8 @@ Route::post('/session','Forms\FormController@loginPg')->name('log');
 Route::get('/like/{product}','Forms\FormController@likeData')->name('like');
 Route::get('/dislike/{product}','Forms\FormController@dislikeData')->name('dislike');
 Route::get('/uall','Forms\FormController@uall');
+Route::post('/comment','Forms\FormController@comment')->name('comment');
+Route::post('/comment/{pro}','Forms\FormController@comment')->name('comment');
+Route::post('/reply/{id}','Forms\FormController@reply')->name('reply');
+
 

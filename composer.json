@@ -17,6 +17,7 @@
         "laravel/passport": "^9.3",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^2.2",
+        "spatie/laravel-activitylog": "^3.14",
         "tymon/jwt-auth": "^1.0"
     },
     "require-dev": {

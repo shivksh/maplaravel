@@ -56,11 +56,29 @@
 </div>
 </div>
 </div>
-@if($variable[0]->thumbups == 1 )
+@if($variable[0]->like == 1 )
 <a href="{{ route('dislike',$data[0]->email) }}"><button type="button" class="btn btn-primary">Dislike</button></a><br>
 @else
 <a href="{{ route('like',$data[0]->email) }}"><button type="button" class="btn btn-primary">Like</button></a><br>
 @endif
+
+<form action="{{ route('comment', $data[0] -> email ) }}" method="post">
+@csrf
+<input type="text" name="comment" placeholder="Enter your comment">
+<input type="submit">
+</form>
+
+@foreach($comment as $talk)
+<h1>{{ $talk->comment }}</h1>
+<h1>{{ $talk->reply}}</h1>
+
+<form action="{{ route('reply',$talk->id) }}" method="post">
+@csrf
+<input type="text" name="reply">
+<input type="submit">
+</form>
+@endforeach
+
 </div>
 </body>
 </html>

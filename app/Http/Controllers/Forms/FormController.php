@@ -11,6 +11,9 @@ use DB;
 use Hash;
 use App\Jobs\DoJob;
 use App\User;
+use App\Reply;
+use App\Comment;
+
 use App\Like;
 
 
@@ -45,7 +48,7 @@ class FormController extends Controller
             $like->user_id = $last->id;
             $like->email = $last->email;
             $like->save();
-            $this->dispatch(new DoJob($register));
+            DoJob::dispatch($register)->delay(now()->addSeconds(4));
             
 
             // DoJob::dispatch($register);
@@ -112,7 +115,7 @@ class FormController extends Controller
     public function likeData($product){
         $data = DB::table('likes')
         ->where('user_id','=',Auth::User()->id)
-        ->update(['product'=>$product,'thumbups'=>1]);
+        ->update(['product'=>$product,'like'=>1]);
         return redirect('/uall');
     }
 
@@ -120,7 +123,7 @@ class FormController extends Controller
     public function dislikeData($product){
         $data = DB::table('likes')
         ->where('user_id','=',Auth::User()->id)
-        ->update(['product'=>$product,'thumbups'=>0]);
+        ->update(['product'=>$product,'like'=>0]);
         return redirect('/uall');
     }
 
@@ -134,6 +137,41 @@ class FormController extends Controller
                    ->select('*')
                    ->where('user_id','=',Auth::User()->id)
                    ->get();
-        return view('pages.dashboard',compact('data','variable'));
+        $comment = DB::table('replies')
+                   ->select('*')
+                   ->get();
+        return view('pages.dashboard',compact('data','variable','comment'));
+    }
+    public function comment(Request $req,$pro){
+        $ret = DB::table('likes')
+        ->select('*')
+        ->where('user_id', Auth::User()->id)
+        ->get();
+        $var = new Comment;
+        $var->pro_id = $ret[0]->id;
+        $var->user_id = Auth::User()->id;
+        $var->pro_name = $pro;
+        $var->comment = $req->comment;
+        $var->save();
+        return redirect('/uall');  
+    } 
+
+    
+    public function reply(Request $req,$comm_id){
+        $data= DB::table('comments')
+        ->select('*')
+        ->where('id',$comm_id)
+        ->get();
+        $store = new Reply;
+        $store->pro_id = $data[0]->pro_id;
+        $store->user_id = Auth::User()->id;
+        $store->pro_name = $data[0]->pro_name;
+        $store->comment = $data[0]->comment;
+        $store->comm_id = $data[0]->id;
+        $store->reply = $req->reply;
+        $store->save();
+        return redirect('/uall');
+
+
     }
 }
